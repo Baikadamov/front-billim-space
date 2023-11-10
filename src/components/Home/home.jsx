@@ -1,6 +1,6 @@
 import React from "react";
 import {useState} from 'react';
-import logo from '../../assets/logo.svg';
+import logo from '../../assets/finalLogo.svg';
 
 const Home = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -29,10 +29,17 @@ const Home = () => {
                         <div className={`flex `}>
                             <img src={logo} width={50} alt=""/>
                             <a className={`text-xl font-semibold text-gray-900 dark:text-white flex items-center ml-2`}
-                               href="">Bilim Space</a>
+                               href="/#">Bilim Space</a>
+                            <button onClick={toggleSideBar} className={`ms-auto ${!isOpen ? 'hidden' : ''}`}>
+                                <svg className="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
+                                          strokeWidth="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"/>
+                                </svg>
+                            </button>
                         </div>
                         <li className={`flex`}>
-                            <a href="#"
+                            <a href="/#"
                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <svg
                                     className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -45,16 +52,9 @@ const Home = () => {
                                 </svg>
                                 <span className="ml-3">Dashboard</span>
                             </a>
-                            <button onClick={toggleSideBar} className={`ms-auto ${!isOpen ? 'hidden' : ''}`}>
-                                <svg className="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true"
-                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
-                                          strokeWidth="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"/>
-                                </svg>
-                            </button>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="/#"
                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <svg
                                     className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -67,7 +67,7 @@ const Home = () => {
                             </a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="/#"
                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <svg
                                     className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -82,7 +82,7 @@ const Home = () => {
                             </a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="/#"
                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <svg
                                     className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -95,7 +95,7 @@ const Home = () => {
                             </a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="/#"
                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <svg
                                     className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
