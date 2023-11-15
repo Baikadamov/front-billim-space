@@ -7,14 +7,14 @@ const Registration = () => {
   const [password, setPassword] = React.useState('');
 
   async function onRegisterClick() {
-    await axios
-      .post('http://localhost:5000/api/register', {
+    try {
+      await axios.post('http://localhost:5000/api/register', {
         email: email,
         password: password,
-      })
-      .then((res) => {
-        console.log(res);
       });
+    } catch (error) {
+      throw error;
+    }
   }
   return (
     <div>
