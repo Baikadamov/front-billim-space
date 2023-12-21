@@ -37,7 +37,7 @@ const Sidebar = () => {
                             <div className={`flex `}>
                                 <img src={logo} width={50} alt=""/>
                                 <a className={`text-xl font-semibold text-gray-900 dark:text-white flex items-center ml-2`}
-                                   href="">Bilim Space</a>
+                                   href="/">Bilim Space</a>
                                 <button onClick={toggleSideBar} className={`ms-auto ${!isOpen ? 'hidden' : ''}`}>
                                     <svg className="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true"
                                          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">

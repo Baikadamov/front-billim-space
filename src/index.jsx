@@ -9,6 +9,7 @@ import Courses from "./pages/courses";
 import Course from "./pages/course";
 import Grades from "./pages/grades";
 import Task from "./pages/task";
+import Users from "./pages/users";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +19,7 @@ root.render(
             <Routes>
                 <Route path="" element={<Courses/>}/>
                 <Route path="/course/:id/" element={<Course/>}/>
+                <Route path="/course/:id/users" element={<Users/>}/>
                 <Route path="/task/:id" element={<Task/>}/>
                 <Route path="/grades" element={<Grades/>}/>
                 <Route path="/registration" element={<Registration/>}></Route>

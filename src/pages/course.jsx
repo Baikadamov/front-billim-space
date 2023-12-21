@@ -1,26 +1,44 @@
 import {useParams} from 'react-router-dom'
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 const Course = () => {
     const {id} = useParams()
+    const [course, setCourse] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5000/api/course/${id}`);
+                setCourse(response.data); // Assuming the response contains the course data
+                console.log('Course:', response.data);
+            } catch (error) {
+                console.error('Error fetching course:', error);
+            }
+        };
+
+        fetchData();
+    }, [id]);
     return <>
+        {course ? (
         <div className="p-4 sm:ml-64 mt-5">
             <div>
-                <span className=" text-lg"> Course ID : {id} </span>
+                    <span className=" text-lg"> Course Name : <span className="font-medium text-xl"> {course.title}</span>  </span>
                 <hr className="my-5"/>
             </div>
             <div className="container course justify-between px-5">
                 <div className=" text-blue-800 font-medium mb-5 ">
                     <div className="py-2">
-                        <a href={'/'} className=""> О курсе</a>
+                        <a href={'/'} className="link"> Задания</a>
                     </div>
                     <div className="py-2">
-                        <a href={'/'} className="link"> Задания</a>
+                        <a href={'/'} className="link">Добавить новое задание</a>
                     </div>
                     <div className="py-2">
                         <a href={'/'} className="link"> Оценки</a>
                     </div>
                     <div className="py-2">
-                        <a href={'/'} className="link"> Пользователи</a>
+                        <a href={`/course/${course._id}/users`} className="link"> Пользователи</a>
                     </div>
                     <div className="py-2">
                         <a href={'/'} className="link"> Файлы</a>
@@ -30,33 +48,39 @@ const Course = () => {
                     </div>
                 </div>
 
-                <div className="tasks border-2 mb-5">
-                    <p className="font-medium p-4 bg-gray-100   "> Новые задания </p>
-                    <hr/>
-                    <div>
-                        <div className="bg-white rounded py-5 p-4 hover:bg-blue-50">
-                            <a href={'/'} className="hover:underline "> Лабораторная работа номер 2 </a>
-                        </div>
+
+                <div className="tasks  mb-5">
+                    <p className="text-xl font-medium"> {course.title} </p>
+                    <p className="text-lg mb-4"> {course.description} </p>
+                    <div className="border-2">
+                        <p className="font-medium p-4 bg-gray-100   "> Новые задания </p>
                         <hr/>
-                    </div>
-                    <div>
-                        <div className="bg-white rounded py-5 p-4 hover:bg-blue-50">
-                            <a href="/task/1/" className="hover:underline"> Лекция 1 </a>
+                        <div>
+                            <div className="bg-white rounded py-5 p-4 hover:bg-blue-50">
+                                <a href={'/'} className="hover:underline "> Лабораторная работа номер 2 </a>
+                            </div>
+                            <hr/>
                         </div>
-                        <hr/>
-                    </div>
-                    <div>
-                        <div className="bg-white rounded py-5 p-4 hover:bg-blue-50">
-                            <a href={'/'} className="hover:underline"> Лекция 1 </a>
+                        <div>
+                            <div className="bg-white rounded py-5 p-4 hover:bg-blue-50">
+                                <a href="/task/1/" className="hover:underline"> Лекция 1 </a>
+                            </div>
+                            <hr/>
                         </div>
-                        <hr/>
-                    </div>
-                    <div>
-                        <div className="bg-white rounded py-5 p-4 hover:bg-blue-50">
-                            <a href={'/'} className="hover:underline"> Лекция 1 </a>
+                        <div>
+                            <div className="bg-white rounded py-5 p-4 hover:bg-blue-50">
+                                <a href={'/'} className="hover:underline"> Лекция 1 </a>
+                            </div>
+                            <hr/>
                         </div>
-                        <hr/>
+                        <div>
+                            <div className="bg-white rounded py-5 p-4 hover:bg-blue-50">
+                                <a href={'/'} className="hover:underline"> Лекция 1 </a>
+                            </div>
+                            <hr/>
+                        </div>
                     </div>
+
                 </div>
 
                 <div className="mb-5">
@@ -86,7 +110,9 @@ const Course = () => {
             </div>
 
         </div>
-
+        ) : (
+            <p>Loading...</p>
+        )}
     </>
 }
 
