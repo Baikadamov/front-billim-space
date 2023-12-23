@@ -6,10 +6,25 @@ const Task = () => {
   const { id } = useParams();
 
   const [file, setFile] = React.useState(null);
+  const [data, setData] = React.useState('');
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/assignment/${id}`);
+        setData(response.data);
+        console.log('Task:', response.data);
+
+        // get grade
+      } catch (error) {
+        console.error('Error fetching course:', error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   const handleFileChange = (event) => {
-    // setFile(e.target.files[0]);
-
     if (event.target && event.target.files) {
       setFile(event.target.files[0]);
     } else {
@@ -77,7 +92,7 @@ const Task = () => {
           </div>
 
           <div className="mb-5 w-full sm:w-2/3">
-            <h4 className="text-3xl text-left  ">Лабораторная работа 1 </h4>
+            <h4 className="text-3xl text-left  ">{data.title} </h4>
             <hr className="my-2 " />
             <div className="flex justify-between mb-2">
               <div>
@@ -99,16 +114,7 @@ const Task = () => {
             </div>
             <hr className="my-2 " />
             <div>
-              <p>
-                Для оценки финального проекта по предмету MEAN Stack следующие критерии:
-                Функциональность (25 баллов): Реализация основных функций, связанных с выбранными
-                темами. Работоспособность всех компонентов и модулей. Взаимодействие между Angular,
-                Express и MongoDB. Дизайн и пользовательский опыт (15 баллов): Удобство
-                использования интерфейса. Внешний вид и структура веб-приложения. Адаптивность
-                дизайна к разным устройствам. Безопасность (10 баллов): Защита от уязвимостей, таких
-                как инъекции, атаки CSRF, XSS и других. Аутентификация и авторизация пользователей.
-                Тестирование (10 баллов):
-              </p>
+              <p>{data.description}</p>
             </div>
             <div className="mt-5">
               <div className="w-full">
