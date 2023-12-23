@@ -6,7 +6,7 @@ const CreateTask = () => {
             <div className="p-4 sm:ml-64">
                 <div className="p-4 ">
                     <section
-                        className="max-w-4xl p-6 mx-auto bg-gray-100 border-2 rounded-md shadow-md  ">
+                        className="max-w-5xl p-6 mx-auto bg-gray-50 border-2 rounded-md shadow-md pb-24 "  >
                         <h1 className="text-xl font-medium text-black capitalize dark:">Создать новое задание</h1>
                         <form  >
                             <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
@@ -77,7 +77,7 @@ const CreateTask = () => {
                                 </div>
                             </div>
 
-                            <div class="flex justify-end mt-6">
+                            <div class="flex justify-end mt-16">
                                 <button
                                     class="px-6 py-2 leading-5 text-white  transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-gray-600"> Добавить
                                 </button>

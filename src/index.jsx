@@ -26,8 +26,8 @@ root.render(
                 <Route path="/grades" element={<Grades/>}/>
                 <Route path="/all-users" element={<AllUsers/>}/>
                 <Route path="/create-task" element={<CreateTask/>}/>
-                <Route path="/registration" element={<Registration/>}></Route>
-                <Route path="/login" element={<Login/>}></Route>
+                <Route path="/registration" element={<Registration/>}/>
+                <Route path="/login" element={<Login/>}/>
             </Routes>
         </BrowserRouter>
     </React.StrictMode>
