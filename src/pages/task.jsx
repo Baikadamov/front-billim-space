@@ -7,6 +7,7 @@ const Task = () => {
 
   const [file, setFile] = React.useState(null);
   const [data, setData] = React.useState('');
+  const [grade, setGrade] = React.useState(0);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -16,6 +17,17 @@ const Task = () => {
         console.log('Task:', response.data);
 
         // get grade
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        console.log(user.user.id);
+        console.log(response.data._id);
+
+        const gradeResponse = await axios.post('http://localhost:5000/api/assignment/grade', {
+          assignmentId: response.data._id,
+          studentId: user.user.id,
+        });
+
+        setGrade(gradeResponse.data);
       } catch (error) {
         console.error('Error fetching course:', error);
       }
@@ -109,7 +121,7 @@ const Task = () => {
               </div>
               <div>
                 <span className="font-medium"> Оценка: </span>
-                <span className="text-red-600 font-medium"> 60 </span>
+                <span className="text-red-600 font-medium"> {grade} </span>
               </div>
             </div>
             <hr className="my-2 " />
