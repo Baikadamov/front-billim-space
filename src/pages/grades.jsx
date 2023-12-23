@@ -5,7 +5,8 @@ const Grades = () => {
         <div>
             <div className="p-4 sm:ml-64">
                 <div className="p-4 ">
-                    Grades Works
+                    <p className="font-medium text-2xl">  Общая оценка по курсам </p>
+
                 </div>
             </div>
         </div>

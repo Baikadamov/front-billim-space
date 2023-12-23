@@ -1,14 +1,31 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useState} from 'react';
 import logo from '../../assets/logo.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import AuthService from "../../service/authservice";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false)
+    const [currentUser, setCurrentUser] = useState(undefined);
+
     const toggleSideBar = () => {
         setIsOpen(!isOpen)
         console.log(isOpen)
     }
+
+    useEffect(() => {
+        const user = AuthService.getCurrentUser();
+        console.log(user)
+        if (user) {
+            setCurrentUser(user);
+            console.log("User email:", user.user.email);
+        }
+
+    }, []);
+    // console.log(currentUser.a)
+    const logOut = () => {
+        AuthService.logout();
+    };
 
     const navigate = useNavigate();
     const currentPath = window.location.pathname;
@@ -49,10 +66,12 @@ const Sidebar = () => {
                             <li className={`flex`}>
                                 <a href="#"
                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-
-                                    <span className="">Student name</span>
+                                    <span className="">Student </span>
                                 </a>
                             </li>
+                            {currentUser && (
+                                <span className="p-2">User Email: {currentUser.user.email}</span>
+                            )}
                             <li className={`flex`}>
                                 <a href="/grades"
                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -111,7 +130,7 @@ const Sidebar = () => {
                                 </a>
                             </li>
                             <li>
-                                <a href="#"
+                                <a onClick={logOut} href="/login"
                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                     <svg
                                         className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -121,7 +140,11 @@ const Sidebar = () => {
                                               strokeWidth="2"
                                               d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
                                     </svg>
-                                    <span className="flex-1 ml-3 whitespace-nowrap">Sign Out</span>
+                                    {currentUser ?
+                                        (<span className="flex-1 ml-3 whitespace-nowrap">Sign Out</span>) :
+                                        (<p></p>)
+                                    }
+
                                 </a>
                             </li>
                         </ul>
