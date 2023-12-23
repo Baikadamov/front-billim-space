@@ -1,42 +1,50 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import axios from 'axios';
 
 const Courses = () => {
+    const [courses, setCourses] = useState([]);
 
-    const [courses, setCourses] = React.useState([]);
-
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get('http://localhost:5000/api/courses/');
-                setCourses(response.data); // Assuming the response contains the courses data
-                console.log('Courses:', response.data);
+                // Assuming each course has a 'description' property
+                const truncatedCourses = response.data.map(course => ({
+                    ...course,
+                    description: truncateDescription(course.description, 140) // Adjust the max length as needed
+                }));
+                setCourses(truncatedCourses);
+                console.log('Courses:', truncatedCourses);
             } catch (error) {
                 console.error('Error fetching courses:', error);
             }
         };
 
         fetchData();
-    }, []); // The empty dependency array means this effect will run once when the component mounts
+    }, []);
 
+    // Truncate the description function
+    const truncateDescription = (description, maxLength) => {
+        return description.length > maxLength
+            ? `${description.slice(0, maxLength)}...`
+            : description;
+    };
     // The rest of your component logic here
 
     return (
         <div>
             <div className="p-4 sm:ml-64">
                 <div className="p-4 ">
-                    <span className="text-l font-semibold">Сводка по курсам</span>
-                    <div className="mx-auto">
+                    <span className="font-medium text-2xl p-3 mb-5 ">Сводка по курсам</span>
+                    <div className="mx-auto mt-2">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
                             {
                                 courses.map((item, index) => (
 
-                                    <div className="mx-3" key={item._id}>
+                                    <div className="mx-3  " key={item._id}  >
                                         <div
-                                            className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                                            <div className="bg-amber-500 mb-2 ">
-                                            </div>
+                                            className="max-w-sm h-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 
                                             <div className="p-5">
                                                 <a href="/">

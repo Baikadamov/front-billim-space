@@ -136,7 +136,7 @@ const Task = () => {
                     onChange={handleFileChange}
                     type="file"
                     name="file_upload"
-                    class="hidden"
+                    className="hidden"
                   />
                 </label>
               </div>
