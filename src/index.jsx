@@ -21,7 +21,7 @@ root.render(
             <Sidebar/>
             <Routes>
                 <Route exact path="" element={<PrivateRoute/>}>
-                    <Route exact path="" element={<Course/>}/>
+                    <Route exact path="" element={<Courses/>}/>
                 </Route>
                 <Route exact path='/grades' element={<PrivateRoute/>}>
                     <Route exact path='/grades' element={<Grades/>}/>

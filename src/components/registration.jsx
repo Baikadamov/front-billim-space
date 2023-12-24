@@ -3,12 +3,14 @@ import logo from '../assets/finalLogo.svg';
 import axios from 'axios';
 import AuthService from "../service/authservice";
 import {useNavigate} from "react-router-dom";
+import {Alert} from "flowbite-react";
+import {HiInformationCircle} from "react-icons/hi";
 
 const Registration = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-
+    const [error, setError] = useState(null); // New state for handling errors
     const navigate = useNavigate();
 
     const handleSignup = async (e) => {
@@ -16,12 +18,12 @@ const Registration = () => {
 
         // Simple password validation
         if (password.length < 8) {
-            alert('Password must be at least 8 characters long');
+            setError("Password must be at least 8 characters long");
             return;
         }
 
         if (password !== confirmPassword) {
-            alert('Passwords do not match');
+            setError("Passwords do not match");
             return;
         }
 
@@ -34,7 +36,7 @@ const Registration = () => {
                     window.location.reload();
                 },
                 (error) => {
-                    alert('user already exists')
+                    setError("user already exists");
                     console.log(error);
                 }
             );
@@ -45,7 +47,15 @@ const Registration = () => {
     };
     return (
         <div>
-            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <div className="w-1/3 px-5  mt-5 mx-auto ">
+                {error && (
+                    <Alert icon={HiInformationCircle} className="text-center" isOpen={true} color="failure"  >
+                        <span className="font-medium ">{error}</span>
+                    </Alert>
+                )}
+            </div>
+
+            <div className="flex flex-col items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0">
                 <a
                     href="/#"
                     className="flex items-center mb-6 text-3xl font-bold text-gray-900 dark:text-white">
