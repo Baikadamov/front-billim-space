@@ -48,7 +48,7 @@ const Registration = () => {
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <a
                     href="/#"
-                    className="flex items-center mb-6 text-2xl font-bold text-gray-900 dark:text-white">
+                    className="flex items-center mb-6 text-3xl font-bold text-gray-900 dark:text-white">
                     <img className="w-8 h-8 mr-2" src={logo} alt="logo"/>
                     BilimSpace
                 </a>

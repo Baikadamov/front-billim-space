@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import './index.css';
 import Sidebar from './components/Home/sidebar';
 import Registration from './components/registration';
@@ -12,23 +12,40 @@ import Task from './pages/task';
 import Users from './pages/users';
 import CreateTask from './pages/create-task';
 import AllUsers from './pages/all-users';
+import PrivateRoute from "./service/privateRoute";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <>
-    <BrowserRouter>
-      <Sidebar />
-      <Routes>
-        <Route path="" element={<Courses />} />
-        <Route path="/course/:id/" element={<Course />} />
-        <Route path="/course/:id/users" element={<Users />} />
-        <Route path="/task/:id" element={<Task />} />
-        <Route path="/grades" element={<Grades />} />
-        <Route path="/all-users" element={<AllUsers />} />
-        <Route path="/create-task" element={<CreateTask />} />
-        <Route path="/registration" element={<Registration />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </BrowserRouter>
-  </>,
+    <>
+        <BrowserRouter>
+            <Sidebar/>
+            <Routes>
+                <Route exact path="" element={<PrivateRoute/>}>
+                    <Route exact path="" element={<Course/>}/>
+                </Route>
+                <Route exact path='/grades' element={<PrivateRoute/>}>
+                    <Route exact path='/grades' element={<Grades/>}/>
+                </Route>
+                <Route exact path='/create-task' element={<PrivateRoute/>}>
+                    <Route exact path='/create-task' element={<CreateTask/>}/>
+                </Route>
+                <Route exact path='/all-users' element={<PrivateRoute/>}>
+                    <Route exact path='/all-users' element={<AllUsers/>}/>
+                </Route>
+                <Route exact path='/task/:id' element={<PrivateRoute/>}>
+                    <Route exact path='/task/:id' element={<Task/>}/>
+                </Route>
+                <Route exact path='/course/:id/users' element={<PrivateRoute/>}>
+                    <Route exact path='/course/:id/users' element={<Users/>}/>
+                </Route>
+                <Route exact path='/course/:id/' element={<PrivateRoute/>}>
+                    <Route exact path='/course/:id/' element={<Course/>}/>
+                </Route>
+
+                <Route path="/registration" element={<Registration/>}/>
+                <Route path="/login" element={<Login/>}/>
+                <Route path="*" element={<Navigate to="/login"/>}/>
+            </Routes>
+        </BrowserRouter>
+    </>,
 );

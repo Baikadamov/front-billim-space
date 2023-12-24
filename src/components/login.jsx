@@ -30,7 +30,7 @@ const Login = () => {
     return (
         <div>
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                <a href="/#" className="flex items-center mb-6 text-2xl font-bold text-gray-900 dark:text-white">
+                <a href="/#" className="flex items-center mb-6 text-3xl font-bold text-gray-900 dark:text-white">
                     <img className="w-8 h-8 mr-2" src={logo}
                          alt="logo"/>
                     BilimSpace
@@ -71,6 +71,14 @@ const Login = () => {
                                 Войти
                             </button>
                         </form>
+                        <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                            Нет аккаунта ?{' '}
+                            <a
+                                href="/registration"
+                                className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                                Зарегистрируйтесь здесь
+                            </a>
+                        </p>
                     </div>
                 </div>
             </div>
