@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 const CreateTask = () => {
   const [courses, setCourses] = React.useState([]);
   const [title, setTitle] = React.useState('');
   const [date, setDate] = React.useState('');
-  const [grade, setGrade] = React.useState(0);
+  const [grade, setGrade] = useState(0);
   const [description, setDescription] = React.useState('');
   const [file, setFile] = React.useState(null);
   const [selectedCourse, setSelectedCourse] = React.useState('');
+  const [gradeOption, setGradeOption] = React.useState('');
+  const [courseId, setCourseId] = React.useState('');
 
   const handleFileChange = (event) => {
     if (event.target && event.target.files) {
@@ -18,33 +20,44 @@ const CreateTask = () => {
   };
 
   // TODO
-  const handleUpload = async () => {
-    // const formData = new FormData();
-    // formData.append('file', file);
 
-    // try {
-    //   await axios.post('http://localhost:5000/api/file/test', formData);
-    //   console.log('File uploaded successfully');
-    // } catch (error) {
-    //   console.error('Error uploading file', error);
-    // }
-    try {
-      let courseId;
-      for (let i = 0; i < courses.length; i++) {
-        if (courses[i].title === title) {
-          courseId = courseId[i];
-        }
+  const setCourseHandle = async (event) => {
+    setSelectedCourse(event.target.value);
+    for (let i = 0; i < courses.length; i++) {
+      if (courses[i].title === event.target.value) {
+        setCourseId(courses[i].id);
       }
+    }
+  };
+
+  // const handleSelectChange = (event) => {
+  //   const selectedValue = event.target.value;
+
+  //   setGrade(gradeValue);
+  //   console.log(gradeValue);
+  // };
+  const handleUpload = async () => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      await axios.post('http://localhost:5000/api/file/test', formData);
+      console.log('File uploaded successfully');
+    } catch (error) {
+      console.error('Error uploading file', error);
+    }
+    try {
+      console.log(selectedCourse);
 
       const user = JSON.parse(localStorage.getItem('user'));
-
+      console.log(grade);
       await axios.post('http://localhost:5000/api/assignment', {
         title: title,
         courseId: courseId,
+        typeOfGrade: gradeOption,
         description: description,
         teacher: user.user.id,
         deadline: date,
-        gradeType: grade,
         filepath: '',
       });
     } catch (error) {
@@ -83,10 +96,14 @@ const CreateTask = () => {
                   </label>
                   <select
                     value={selectedCourse}
-                    onChange={(e) => setSelectedCourse(e.target.value)}
+                    onChange={(e) => setCourseHandle(e)}
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                     {courses.map((item, index) => {
-                      return <option>{item.title}</option>;
+                      return (
+                        <>
+                          <option>{item.title}</option>
+                        </>
+                      );
                     })}
                   </select>
                 </div>
@@ -124,16 +141,17 @@ const CreateTask = () => {
                     Тип Задания
                   </label>
                   <select
-                      value={selectedCourse}
-                      onChange={(e) => setSelectedCourse(e.target.value)}
-                      className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-
-                      return <option> вск1</option>
-                      return <option> вск2</option>
-                      return <option> Мидка</option>
-                      return <option> Мидка2</option>
-                      return <option> Файнал</option>
-
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                    onChange={(e) => {
+                      setGradeOption(e.target.value);
+                    }}
+                    value={gradeOption}>
+                    <option>-</option>
+                    <option>ВСК1</option>
+                    <option>ВСК2</option>
+                    <option>Midterm</option>
+                    <option>Endterm</option>
+                    <option>Final</option>
                   </select>
                 </div>
                 <div>

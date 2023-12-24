@@ -45,12 +45,21 @@ const Task = () => {
   };
 
   const handleUpload = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('assignmentId', id);
+    formData.append('userId', user.user.id);
+
+    console.log(formData);
 
     try {
-      await axios.post('http://localhost:5000/api/file/test', formData);
-      console.log('File uploaded successfully');
+      await axios
+        .put(`http://localhost:5000/api/file/test/${id}/${user.user.id}`, formData)
+        .then(() => {
+          console.log('File uploaded successfully');
+        });
     } catch (error) {
       console.error('Error uploading file', error);
     }
