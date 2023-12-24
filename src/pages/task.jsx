@@ -1,6 +1,7 @@
-import { useParams } from 'react-router-dom';
-import React from 'react';
+import {useParams} from 'react-router-dom';
+import React, {useState} from 'react';
 import axios from 'axios';
+import AuthService from "../service/authservice";
 
 const Task = () => {
   const { id } = useParams();
@@ -68,50 +69,7 @@ const Task = () => {
   return (
     <>
       <div className="p-4 sm:ml-64 mt-5">
-        <div>
-          <span className=" text-lg"> Course ID : {id} </span>
-          <hr className="my-5" />
-        </div>
         <div className="container course justify-between px-5">
-          <div className=" text-blue-800 font-medium mb-5 ">
-            <div className="py-2">
-              <a href="/" className="">
-                {' '}
-                О курсе
-              </a>
-            </div>
-            <div className="py-2">
-              <a href="/" className="link">
-                {' '}
-                Задания
-              </a>
-            </div>
-            <div className="py-2">
-              <a href="/" className="link">
-                {' '}
-                Оценки
-              </a>
-            </div>
-            <div className="py-2">
-              <a href="/course" className="link">
-                {' '}
-                Пользователи
-              </a>
-            </div>
-            <div className="py-2">
-              <a href="/" className="link">
-                {' '}
-                Файлы
-              </a>
-            </div>
-            <div className="py-2">
-              <a href="/" className="link">
-                {' '}
-                Оценки
-              </a>
-            </div>
-          </div>
-
           <div className="mb-5 w-full sm:w-2/3">
             <h4 className="text-3xl text-left  ">{data.title} </h4>
             <hr className="my-2 " />
@@ -125,8 +83,7 @@ const Task = () => {
                 <span> 100 </span>
               </div>
               <div>
-                <span className="font-medium"> Тип</span>
-                <span> ВСК 2 </span>
+                <span className="font-medium"> <p>Тип {data.typeOfGrade}</p></span>
               </div>
               <div>
                 <span className="font-medium"> Оценка: </span>
@@ -142,61 +99,52 @@ const Task = () => {
                 <label className="flex justify-center w-full h-24 px-24 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
                   <span className="flex items-center space-x-2">
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6 text-gray-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2">
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-6 h-6 text-gray-600"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2">
                       <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                       />
                     </svg>
                     <span className="font-medium text-gray-600">
-                      Drop files to Attach, or
-                      <span className="text-blue-600 underline">browse</span>
-                    </span>
+                        {file ? (
+                            <span>{file.name}</span>
+                        ) : (
+                            <>
+                              Drop files to Attach, or
+                              <span className="text-blue-600 underline"> browse</span>
+                            </>
+                        )}
+                      </span>
                   </span>
-                  <input
-                    onChange={handleFileChange}
-                    type="file"
-                    name="file_upload"
-                    className="hidden"
-                  />
-                </label>
-              </div>
-              <div className="mt-5 ">
-                <button
-                  onClick={handleUpload}
-                  className="p-2  bg-blue-700 rounded-lg border-2 border-blue-700 text-white hover:text-blue-700 hover:bg-white text-sm">
-                  Отправить задание
-                </button>
-              </div>
-            </div>
-          </div>
+                                    <input
+                                        onChange={handleFileChange}
+                                        type="file"
+                                        name="file_upload"
+                                        className="hidden"
+                                    />
+                                </label>
+                            </div>
+                            <div className="mt-5 ">
+                                <button
+                                    onClick={handleUpload}
+                                    className="p-2  bg-blue-700 rounded-lg border-2 border-blue-700 text-white hover:text-blue-700 hover:bg-white text-sm">
+                                    Отправить задание
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
-          <div className="mb-5 mr-10">
-            Результат
-            <hr />
-            <div className="mt-2 mb-3">
-              <a href="/" className="hover:underline">
-                <div className="text-blue-700">ISC 2</div>
-                <div className="text-sm">10 из 20</div>
-              </a>
+
+                </div>
             </div>
-            <div className="mt-2 mb-3">
-              <a href="/" className="hover:underline">
-                <div className="text-blue-700">ISC 2</div>
-                <div className="text-sm">10 из 20</div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+        </>
+    );
 };
 
 export default Task;

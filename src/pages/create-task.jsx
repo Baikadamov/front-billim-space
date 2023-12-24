@@ -92,7 +92,7 @@ const CreateTask = () => {
               <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                 <div>
                   <label className=" dark:text-gray-200" htmlFor="passwordConfirmation">
-                    Дисцплина в которую хотите добавить задание
+                    Курс в который хотите добавить задание
                   </label>
                   <select
                     value={selectedCourse}
@@ -190,7 +190,13 @@ const CreateTask = () => {
                         <label
                           htmlFor="file-upload"
                           className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                          <span className="">Upload a file</span>
+                          <p className="text-center">
+                            {file ? (
+                                <span>{file.name}</span>
+                            ) : (
+                                <span className="">Загрузите ваш файл нажав здесь</span>
+                            )}
+                          </p>
                           <input
                             onChange={handleFileChange}
                             id="file-upload"
@@ -199,7 +205,6 @@ const CreateTask = () => {
                             className="sr-only"
                           />
                         </label>
-                        <p className="pl-1 ">or drag and drop</p>
                       </div>
                       <p className="text-xs ">PNG, JPG, GIF up to 10MB</p>
                     </div>
