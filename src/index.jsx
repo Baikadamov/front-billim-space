@@ -9,7 +9,6 @@ import Courses from './pages/courses';
 import Course from './pages/course';
 import Grades from './pages/grades';
 import Task from './pages/task';
-import Users from './pages/users';
 import CreateTask from './pages/create-task';
 import AllUsers from './pages/all-users';
 import PrivateRoute from "./service/privateRoute";
@@ -39,11 +38,11 @@ root.render(
                 <Route exact path='/task/:id' element={<PrivateRoute/>}>
                     <Route exact path='/task/:id' element={<Task/>}/>
                 </Route>
-                <Route exact path='/course/:id/users' element={<PrivateRoute/>}>
-                    <Route exact path='/course/:id/users' element={<Users/>}/>
-                </Route>
                 <Route exact path='/course/:id/' element={<PrivateRoute/>}>
                     <Route exact path='/course/:id/' element={<Course/>}/>
+                </Route>
+                <Route exact path='*' element={<PrivateRoute/>}>
+                    <Route exact path='*' element={<Courses/>}/>
                 </Route>
 
                 <Route path="/registration" element={<Registration/>}/>
