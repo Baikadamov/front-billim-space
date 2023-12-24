@@ -8,6 +8,8 @@ import {HiInformationCircle} from "react-icons/hi";
 
 const Registration = () => {
     const [email, setEmail] = useState("");
+    const [firstname, setFirstname] = useState("");
+    const [lastname, setLastname] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState(null); // New state for handling errors
@@ -17,7 +19,7 @@ const Registration = () => {
         e.preventDefault();
 
         // Simple password validation
-        if (password.length < 8) {
+        if (password.length < 6) {
             setError("Password must be at least 8 characters long");
             return;
         }
@@ -28,7 +30,7 @@ const Registration = () => {
         }
 
         try {
-            await AuthService.signup(email, password).then(
+            await AuthService.signup(email, password, firstname, lastname).then(
                 (response) => {
                     // check for token and user already exists with 200
                     console.log("Sign up successfully", response);
@@ -41,7 +43,6 @@ const Registration = () => {
                 }
             );
         } catch (err) {
-
             console.log(err);
         }
     };
@@ -84,6 +85,40 @@ const Registration = () => {
                                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="name@company.com"
                                     required=""
+                                />
+                            </div>
+                            <div>
+                                <label
+                                    htmlFor="name"
+                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Введите Имя
+                                </label>
+                                <input
+                                    value={firstname}
+                                    onChange={(e) => setFirstname(e.target.value)}
+                                    type="text"
+                                    name="name"
+                                    id="name"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Maksat"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label
+                                    htmlFor="surname"
+                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Введите Фамилию
+                                </label>
+                                <input
+                                    value={lastname}
+                                    onChange={(e) => setLastname(e.target.value)}
+                                    type="text"
+                                    name="surname"
+                                    id="surname"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Olzhasov"
+                                    required
                                 />
                             </div>
                             <div>
