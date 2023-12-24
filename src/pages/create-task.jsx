@@ -2,6 +2,55 @@ import React from 'react';
 import axios from 'axios';
 const CreateTask = () => {
   const [courses, setCourses] = React.useState([]);
+  const [title, setTitle] = React.useState('');
+  const [date, setDate] = React.useState('');
+  const [grade, setGrade] = React.useState(0);
+  const [description, setDescription] = React.useState('');
+  const [file, setFile] = React.useState(null);
+  const [selectedCourse, setSelectedCourse] = React.useState('');
+
+  const handleFileChange = (event) => {
+    if (event.target && event.target.files) {
+      setFile(event.target.files[0]);
+    } else {
+      setFile(undefined);
+    }
+  };
+
+  // TODO
+  const handleUpload = async () => {
+    // const formData = new FormData();
+    // formData.append('file', file);
+
+    // try {
+    //   await axios.post('http://localhost:5000/api/file/test', formData);
+    //   console.log('File uploaded successfully');
+    // } catch (error) {
+    //   console.error('Error uploading file', error);
+    // }
+    try {
+      let courseId;
+      for (let i = 0; i < courses.length; i++) {
+        if (courses[i].title === title) {
+          courseId = courseId[i];
+        }
+      }
+
+      const user = JSON.parse(localStorage.getItem('user'));
+
+      await axios.post('http://localhost:5000/api/assignment', {
+        title: title,
+        courseId: courseId,
+        description: description,
+        teacher: user.user.id,
+        deadline: date,
+        gradeType: grade,
+        filepath: '',
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -32,7 +81,10 @@ const CreateTask = () => {
                   <label className=" dark:text-gray-200" htmlFor="passwordConfirmation">
                     Дисцплина в которую хотите добавить задание
                   </label>
-                  <select className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                  <select
+                    value={selectedCourse}
+                    onChange={(e) => setSelectedCourse(e.target.value)}
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                     {courses.map((item, index) => {
                       return <option>{item.title}</option>;
                     })}
@@ -43,6 +95,10 @@ const CreateTask = () => {
                     Название задания
                   </label>
                   <input
+                    value={title}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                    }}
                     id="username"
                     type="text"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
@@ -54,7 +110,11 @@ const CreateTask = () => {
                   </label>
                   <input
                     id="date"
-                    type="date"
+                    type="datetime-local"
+                    value={date}
+                    onChange={(e) => {
+                      setDate(e.target.value);
+                    }}
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
                 </div>
@@ -66,6 +126,10 @@ const CreateTask = () => {
                   <input
                     id="emailAddress"
                     type="number"
+                    value={grade}
+                    onChange={(e) => {
+                      setGrade(e.target.value);
+                    }}
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
                 </div>
@@ -77,6 +141,10 @@ const CreateTask = () => {
                     id="textarea"
                     rows="5"
                     type="textarea"
+                    value={description}
+                    onChange={(e) => {
+                      setDescription(e.target.value);
+                    }}
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
                 </div>
 
@@ -102,7 +170,13 @@ const CreateTask = () => {
                           for="file-upload"
                           class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                           <span class="">Upload a file</span>
-                          <input id="file-upload" name="file-upload" type="file" class="sr-only" />
+                          <input
+                            onChange={handleFileChange}
+                            id="file-upload"
+                            name="file-upload"
+                            type="file"
+                            class="sr-only"
+                          />
                         </label>
                         <p class="pl-1 ">or drag and drop</p>
                       </div>
@@ -113,7 +187,9 @@ const CreateTask = () => {
               </div>
 
               <div class="flex justify-end mt-16">
-                <button class="px-6 py-2 leading-5 text-white  transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-gray-600">
+                <button
+                  onClick={handleUpload}
+                  class="px-6 py-2 leading-5 text-white  transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-gray-600">
                   {' '}
                   Добавить
                 </button>
