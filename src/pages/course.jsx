@@ -40,7 +40,7 @@ const Course = () => {
                 </a>
               </div>
               <div className="py-2">
-                <a href={'/'} className="link">
+                <a href={`/course/${course._id}/grades`} className="link">
                   {' '}
                   Оценки
                 </a>
