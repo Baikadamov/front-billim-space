@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { redirect, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import AuthService from '../service/authservice';
@@ -62,6 +62,10 @@ const SetGrades = () => {
          ...prevGrades,
          [`${studentId}-${assignmentId}`]: value,
       }));
+   };
+
+   const handleDownloadFile = async (filename, assignmentId, userId) => {
+      window.location.href = `http://localhost:5000/api/file/download/${assignmentId}/${userId}/${filename.filename}`;
    };
 
    const saveGrades = async () => {
@@ -179,15 +183,22 @@ const SetGrades = () => {
 
                                           return (
                                              <td className="px-6 py-4" key={assignmentIndex}>
-                                                <a
-                                                   href={
-                                                      fileForStudent ? fileForStudent.filename : '#'
-                                                   }
-                                                   className="hover:underline">
-                                                   {fileForStudent
-                                                      ? fileForStudent.filename.substring(0, 12) +
-                                                        '...'
-                                                      : 'No File'}
+                                                <a className="hover:underline cursor-pointer">
+                                                   {fileForStudent ? (
+                                                      <span
+                                                         onClick={() => {
+                                                            handleDownloadFile(
+                                                               fileForStudent,
+                                                               assignment._id,
+                                                               student.student,
+                                                            );
+                                                         }}>
+                                                         {fileForStudent.filename.substring(0, 12) +
+                                                            '...'}
+                                                      </span>
+                                                   ) : (
+                                                      'No File'
+                                                   )}
                                                 </a>
                                                 <span className="mx-2 text-black">
                                                    Оценка :
@@ -225,7 +236,7 @@ const SetGrades = () => {
                                              <input
                                                 type="number"
                                                 className="w-20 border-0 text-black "
-                                                placeholder="90"
+                                                placeholder="-"
                                              />
                                           </span>
                                        </th>

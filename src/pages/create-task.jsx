@@ -21,8 +21,7 @@ const CreateTask = () => {
 
    // TODO
 
-   const setCourseHandle = async (event) => {
-      setSelectedCourse(event.target.value);
+   const setCourseHandle = (event) => {
       for (let i = 0; i < courses.length; i++) {
          if (courses[i].title === event.target.value) {
             setCourseId(courses[i].id);
@@ -97,7 +96,10 @@ const CreateTask = () => {
                            <select
                               value={selectedCourse}
                               defaultValue={'Introduction to Cybersecurity'}
-                              onChange={(e) => setCourseHandle(e)}
+                              onChange={(e) => {
+                                 setCourseHandle(e);
+                                 setSelectedCourse(e.target.value);
+                              }}
                               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                               {courses.map((item, index) => {
                                  return (
